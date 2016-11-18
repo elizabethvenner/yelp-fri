@@ -1,23 +1,24 @@
 Rails.application.routes.draw do
-  devise_for :users
+  root "restaurants#index"
+  devise_for :users, :controllers => { :omniauth_callbacks => "users/omniauth_callbacks" }
+  resources :restaurants do
+    resources :reviews
+  end
+end
   # The priority is based upon order of creation: first created -> highest priority.
   # See how all your routes lay out with "rake routes".
 
   # You can have the root of your site routed with "root"
   # root 'welcome#index'
-  root "restaurants#index"
 
   # Example of regular route:
   #   get 'products/:id' => 'catalog#view'
-  get 'restaurants' => 'restaurants#index'
+  # get 'restaurants' => 'restaurants#index'
 
   # Example of named route that can be invoked with purchase_url(id: product.id)
   #   get 'products/:id/purchase' => 'catalog#purchase', as: :purchase
 
   # Example resource route (maps HTTP verbs to controller actions automatically):
-    resources :restaurants do
-      resources :reviews
-    end
 
   # Example resource route with options:
   #   resources :products do
@@ -58,4 +59,3 @@ Rails.application.routes.draw do
   #     # (app/controllers/admin/products_controller.rb)
   #     resources :products
   #   end
-end
